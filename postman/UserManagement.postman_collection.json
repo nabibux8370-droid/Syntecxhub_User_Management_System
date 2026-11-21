@@ -1,0 +1,59 @@
+{
+  "info": {
+    "name": "Syntecxhub - User Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "userId", "value": "PASTE_USER_ID_HERE" }
+  ],
+  "item": [
+    {
+      "name": "1. Create User (Signup - public)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Ali Khan\",\n  \"email\": \"ali@example.com\",\n  \"password\": \"secret123\",\n  \"age\": 22\n}" },
+        "url": "{{baseUrl}}/api/users"
+      }
+    },
+    {
+      "name": "2. Get All Users (Admin)",
+      "request": {
+        "method": "GET",
+        "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin@example.com" }, { "key": "password", "value": "Admin@12345" }] },
+        "url": { "raw": "{{baseUrl}}/api/users?page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["api", "users"], "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "10" }] }
+      }
+    },
+    {
+      "name": "3. Get My Profile (Basic Auth)",
+      "request": {
+        "method": "GET",
+        "auth": { "type": "basic", "basic": [{ "key": "username", "value": "ali@example.com" }, { "key": "password", "value": "secret123" }] },
+        "url": "{{baseUrl}}/api/users/{{userId}}"
+      }
+    },
+    {
+      "name": "4. Update User",
+      "request": {
+        "method": "PUT",
+        "auth": { "type": "basic", "basic": [{ "key": "username", "value": "ali@example.com" }, { "key": "password", "value": "secret123" }] },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Ali Updated\",\n  \"age\": 23\n}" },
+        "url": "{{baseUrl}}/api/users/{{userId}}"
+      }
+    },
+    {
+      "name": "5. Delete User",
+      "request": {
+        "method": "DELETE",
+        "auth": { "type": "basic", "basic": [{ "key": "username", "value": "ali@example.com" }, { "key": "password", "value": "secret123" }] },
+        "url": "{{baseUrl}}/api/users/{{userId}}"
+      }
+    },
+    {
+      "name": "6. Unauthorized test (no auth -> 401)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/users/{{userId}}" }
+    }
+  ]
+}
